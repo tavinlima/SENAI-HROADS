@@ -32,39 +32,43 @@ SELECT * FROM TIPOHABILIDADE;
 GO
 
 -- Selecionar todas as habilidades e a quais tipos de habilidades elas fazem parte:
-SELECT * FROM HABILIDADE
-INNER JOIN TIPOHABILIDADE
-ON HABILIDADE.idTipoHabilidade = TIPOHABILIDADE.idTipoHabilidade;
+SELECT nomeHabilidade Habilidade, nomeTipoHabilidade [Tipo de Habilidade] FROM HABILIDADE H
+INNER JOIN TIPOHABILIDADE TH
+ON H.idTipoHabilidade = TH.idTipoHabilidade;
 GO
 
 -- Selecionar todos os personagens e suas respectivas classes:
-SELECT * FROM PERSONAGEM 
-INNER JOIN CLASSE
-ON PERSONAGEM.idClasse = CLASSE.idClasse;
+SELECT * FROM PERSONAGEM P 
+INNER JOIN CLASSE C
+ON P.idClasse = C.idClasse;
 GO
 
 -- Selecionar todos os personagens e as classes (mesmo que elas não tenham correspondência em personagens:
-SELECT * FROM PERSONAGEM
-RIGHT JOIN CLASSE
-ON PERSONAGEM.idClasse = CLASSE.idClasse;
+SELECT * FROM PERSONAGEM P
+RIGHT JOIN CLASSE C
+ON P.idClasse = C.idClasse;
 GO
 
 -- Selecionar todas as classes e suas respectivas habilidades:
-SELECT * FROM CLASSEHABILIDADE;
+SELECT nomeClasse Classe, nomeHabilidade Habilidade FROM CLASSE C
+LEFT JOIN CLASSEHABILIDADE CH
+ON C.idClasse = CH.idClasse
+LEFT JOIN HABILIDADE H
+ON CH.idHabilidade = H.idHabilidade
 GO
 
 -- Selecionar todas as habilidades e suas classes (somente as que possuem correspondência):
-SELECT nomeHabilidade Habilidade, nomeClasse Classe FROM HABILIDADE
-INNER JOIN CLASSEHABILIDADE
-ON HABILIDADE.idHabilidade = CLASSEHABILIDADE.idHabilidade
-INNER JOIN CLASSE
-ON CLASSEHABILIDADE.idClasse = CLASSE.idClasse
+SELECT nomeHabilidade Habilidade, nomeClasse Classe FROM HABILIDADE H
+INNER JOIN CLASSEHABILIDADE CH
+ON H.idHabilidade = CH.idHabilidade
+INNER JOIN CLASSE C
+ON CH.idClasse = C.idClasse
 GO
 
 -- Selecionar todas as habilidades e suas classes (mesmo que elas não tenham correspondência:
-SELECT nomeHabilidade Habilidade, nomeClasse Classe FROM HABILIDADE
-FULL OUTER JOIN CLASSEHABILIDADE
-ON HABILIDADE.idHabilidade = CLASSEHABILIDADE.idHabilidade
-FULL OUTER JOIN CLASSE
-ON CLASSEHABILIDADE.idClasse = CLASSE.idClasse
+SELECT nomeHabilidade Habilidade, nomeClasse Classe FROM HABILIDADE H
+FULL OUTER JOIN CLASSEHABILIDADE CH
+ON H.idHabilidade = CH.idHabilidade
+FULL OUTER JOIN CLASSE C
+ON CH.idClasse = C.idClasse
 GO
